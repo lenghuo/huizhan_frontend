@@ -19,7 +19,7 @@
       <el-main style="padding: 0px; width: 100%;color: black;">
         <div class="content">
           <el-container>
-            <el-main class="page-component__scroll" style="padding: 0px;">
+            <el-main class="page-component__scroll">
               <div class="myHome">
                 <header>
                   <div class="header">
@@ -191,6 +191,7 @@ const navigationOptions = ref<NavigationOptions>({
 })
 onMounted(() => {
   getMeeting()
+  // window.addEventListener('scroll', handleScroll)
 })
 </script>
 
@@ -836,7 +837,7 @@ section .module .header .slide-btn span {
 .changePage {
   width: 367px;
   height: 487px;
-  background-color: #150e52;
+  background-color: #2c7cf5;
   display: inline-block;
   position: relative
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="header whiteBg simple-style">
-    <div class="tongfa_box notHomeStyle zh-cn">
+    <div class="tongfa_box notHomeStyle zh-cn" :class="blackClass ? 'blankStyle' : ''">
       <div class="head_content">
         <div class="head_icon">
           <img
@@ -9,7 +9,7 @@
             height="42"
           />
         </div>
-        
+
         <ul class="ul_class simple-style blue">
           <li class="item_name_li active">首页</li>
           <li class="item_name_li">新闻</li>
@@ -127,6 +127,20 @@
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import {onMounted, ref} from "vue";
+
+const blackClass = ref<boolean>(false)
+function handleScroll() {
+  const scroll = document.body.scrollTop || window.scrollY || document.documentElement.scrollTop
+  blackClass.value = scroll > 600
+  console.log(blackClass.value)
+}
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+</script>
 
 <style scoped>
 .header {
@@ -538,5 +552,35 @@
   background: transparent;
   color: #fff;
   border-color: #fff
+}
+.chinese-style .tongfa_box.blankStyle,.tongfa_box.blankStyle {
+  background: #fff;
+  box-shadow: 0 .125rem .625rem 0 rgba(0,0,0,.1)
+}
+
+.chinese-style .tongfa_box.blankStyle .el-dropdown,.chinese-style .tongfa_box.blankStyle .opera,.chinese-style .tongfa_box.blankStyle .opera a,.chinese-style .tongfa_box.blankStyle .ul_class li,.tongfa_box.blankStyle .el-dropdown,.tongfa_box.blankStyle .opera,.tongfa_box.blankStyle .opera a,.tongfa_box.blankStyle .ul_class li {
+  color: #212121
+}
+
+.chinese-style .tongfa_box.blankStyle .ul_class li:not(.division).active,.chinese-style .tongfa_box.blankStyle .ul_class li:not(.division):hover,.tongfa_box.blankStyle .ul_class li:not(.division).active,.tongfa_box.blankStyle .ul_class li:not(.division):hover {
+  border-bottom: .125rem solid #1a73ee;
+  color: #1678d9
+}
+
+.chinese-style .tongfa_box.blankStyle .ul_class li:not(.division).active:before,.chinese-style .tongfa_box.blankStyle .ul_class li:not(.division):hover:before,.tongfa_box.blankStyle .ul_class li:not(.division).active:before,.tongfa_box.blankStyle .ul_class li:not(.division):hover:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg,rgba(26,115,238,0),#1a73ee);
+  box-shadow: 0 .125rem .625rem 0 rgba(0,0,0,.1);
+  opacity: .1
+}
+
+.chinese-style .tongfa_box.blankStyle .ul_class li:not(.division):hover span,.tongfa_box.blankStyle .ul_class li:not(.division):hover span {
+  color: #1678d9
 }
 </style>
