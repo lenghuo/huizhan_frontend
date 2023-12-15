@@ -79,7 +79,7 @@
                     </div>
                   </div>
                 </header>
-                <div class="module1Box" style="width: 100%;height: auto;background-color: #f7f7f7;">
+                <div class="module1Box" style="margin-top:30px;width: 100%;height: auto;background-color: #f7f7f7;">
                   <div class="module1">
                     <div class="tqhy">
                       <div class="tqhyTitle">
@@ -93,17 +93,22 @@
                     </div>
                     <div style="position: relative;margin-top: 40px;">
                       <div class="changePage">
-                        <div class="swiper-button-prev swiper-button-prev2" style="outline: none"></div>
-                        <div class="swiper-button-next swiper-button-next2" style="outline: none"></div>
                         <div class="swiper-pagination"></div>
                       </div>
                       <div class="tqhyBox">
-                        <swiper ref="swiper" :options="options">
-                          <swiper-slide v-for="(item, index) in meeting ? meeting.rows.slice(0, 5) : []" :key="index">
+                        <swiper
+                          :modules="modules"
+                          spaceBetween="0"
+                          :slidesPerView="3"
+                          :slidesPerGroup="3"
+                          :pagination="paginationOptions"
+                          :navigation="navigationOptions"
+                        >
+                          <swiper-slide v-for="(item, index) in meeting ? meeting.rows.slice(0,5) : []" :key="index">
                             <div class="tqhyCard" style="background-color: white">
                               <div class="cardTitle">
                                 <img :src="'https://zha.heavenk.com/prod-api' + item.image" alt=""
-                                  style="width: 100%;height: 234px;">
+                                     style="width: 100%;height: 234px;">
                                 <!-- <div style="padding: 0px 50px;text-align: center;padding-top: 100px;height: 260px;">  </div> -->
                               </div>
                               <div style="padding:11px; background-color: white;">
@@ -116,7 +121,7 @@
                                 <div
                                   style="color: #150e52;letter-spacing:0px;line-height: 30px;font-weight: 600;background-color: white">
                                   会议时间：{{ item.startTime }}</div>
-                                <!-- <a @click="getQrCode(item.qrCode)" class="jrzbj">进入直播间</a> -->
+                                 <a class="jrzbj">进入直播间</a>
                               </div>
                             </div>
                           </swiper-slide>
@@ -135,13 +140,16 @@
 </template>
 
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/header/index.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
+// import Swiper from 'swiper'
+import { Pagination, Autoplay } from 'swiper/modules'
+import { PaginationOptions, NavigationOptions } from 'swiper/types'
 
 const meeting = ref<Array<any>>()
 const options = ref({
@@ -149,7 +157,7 @@ const options = ref({
     el: '.swiper-pagination',
     clickable: true, // 分页器可以点击
     renderBullet: function (index, className) {
-      return '<a style="font-size:40px;z-index:50;text-decoration-line: underline;text-decoration-color: #fff;" class="' + className + '">' +'0'+ (index + 1) + '</a>';
+      return '<a style="font-size:40px;z-index:50;text-decoration-line: underline;color:#fff;margin-right:30px;text-decoration-color: #fff;" class="' + className + '">' +'0'+ (index + 1) + '</a>';
     },
   },
   loopedSlides: 6,
@@ -169,6 +177,18 @@ function getMeeting() {
     meeting.value = res.data
   })
 }
+const modules = [Pagination]
+const paginationOptions = ref<PaginationOptions>({
+  el:'.swiper-pagination',
+  clickable: true,
+  renderBullet: (index, className) => {
+    return '<a style="font-size:40px;z-index:50;text-decoration-line: underline;color:#fff;margin-right:50px;text-decoration-color: #fff;" class="' + className + '">' +'0'+ (index + 1) + '</a>'
+  }
+})
+const navigationOptions = ref<NavigationOptions>({
+  nextEl: '.swiper-button-next2',
+  prevEl: '.swiper-button-prev2',
+})
 onMounted(() => {
   getMeeting()
 })
@@ -760,10 +780,10 @@ section .module .header .slide-btn span {
 }
 
 .tqhy {
-    width: 1140px;
-    margin: auto;
-    text-align: center;
-    margin-top: 60px
+  width: 1140px;
+  text-align: center;
+  margin: 60px auto auto;
+  padding-top: 30px;
 }
 
 .tqhyTitle {
@@ -801,10 +821,25 @@ section .module .header .slide-btn span {
     width: 298px!important;
     height: 430px;
     margin-right: 12px;
-    box-shadow: 5px 5px 10px -4px rgba(0,0,0,.2);
-    background-color: #fff
+    box-shadow: 5px 5px 10px -4px rgba(0,0,0,0.2);
+    background-color: white;
 }
-
+.cardTitle{
+  width: 100%;
+  height: 234px;
+  background-image: url('../images/tqhySideImg1.png');
+  background-size: 100% 100%;
+  color: #fff;
+  font-size:18px;
+  margin: auto;
+}
+.changePage {
+  width: 367px;
+  height: 487px;
+  background-color: #150e52;
+  display: inline-block;
+  position: relative
+}
 .changePage .swiper-button-next {
     top: 252px!important;
     left: 148px!important;
@@ -847,12 +882,20 @@ section .module .header .slide-btn span {
     bottom: 66px;
     left: 8px
 }
-
-.changePage {
-    width: 367px;
-    height: 487px;
-    background-color: #150e52;
-    display: inline-block;
-    position: relative
+.jrzbj{
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  text-decoration: none;
+  background-color: rgb(21, 14, 82);
+  width: 102px;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 6px;
+  font-family: PingFangSC-Thin, sans-serif;
+  cursor: pointer;
 }
 </style>
