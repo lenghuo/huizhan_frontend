@@ -9,12 +9,7 @@
             height="42"
           />
         </div>
-        <div class="rigth_box">
-          <div
-            class="searchInput"
-            style="height: 48px; margin-right: 25px; margin-top: 30px"
-          ></div>
-        </div>
+        
         <ul class="ul_class simple-style blue">
           <li class="item_name_li active">首页</li>
           <li class="item_name_li">新闻</li>
