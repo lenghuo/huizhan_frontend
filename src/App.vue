@@ -93,6 +93,8 @@
                     </div>
                     <div style="position: relative;margin-top: 40px;">
                       <div class="changePage">
+                        <div class="swiper-button-prev swiper-button-prev2" style="outline: none"></div>
+                        <div class="swiper-button-next swiper-button-next2" style="outline: none"></div>
                         <div class="swiper-pagination"></div>
                       </div>
                       <div class="tqhyBox">
@@ -101,6 +103,7 @@
                           spaceBetween="0"
                           :slidesPerView="3"
                           :slidesPerGroup="3"
+                          :speed="2000"
                           :pagination="paginationOptions"
                           :navigation="navigationOptions"
                         >
@@ -145,10 +148,11 @@ import Header from './components/header/index.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 // import Swiper from 'swiper'
-import { Pagination, Autoplay } from 'swiper/modules'
+import { Pagination, Autoplay, Navigation } from 'swiper/modules'
 import { PaginationOptions, NavigationOptions } from 'swiper/types'
 
 const meeting = ref<Array<any>>()
@@ -177,7 +181,7 @@ function getMeeting() {
     meeting.value = res.data
   })
 }
-const modules = [Pagination]
+const modules = [Pagination, Navigation]
 const paginationOptions = ref<PaginationOptions>({
   el:'.swiper-pagination',
   clickable: true,
