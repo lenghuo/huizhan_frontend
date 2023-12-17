@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <el-container class="topContainer" style="min-height: calc(100vh - 306px);">
+    <el-container ref="headerBanner" class="topContainer" style="min-height: calc(100vh - 306px);">
       <el-main style="padding: 0px; width: 100%;color: black;">
         <div class="content">
           <el-container>
@@ -23,7 +23,7 @@
               <div class="myHome">
                 <header>
                   <div class="header">
-                    <div class="live-list-wrap">
+                    <div class="noBody live-list-wrap">
                       <div class="live-header"></div>
                       <div class="live-content">
                         <div style="display: flex;">
@@ -150,11 +150,14 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 // import Swiper from 'swiper'
 import { Pagination, Autoplay, Navigation } from 'swiper/modules'
 import { PaginationOptions, NavigationOptions } from 'swiper/types'
-
+import gsap from 'gsap'
+let ctx
+const headerBanner = ref(null)
+const showHeaderBanner = ref<boolean>(false)
 const meeting = ref<Array<any>>()
 const options = ref({
   pagination: {
@@ -193,9 +196,19 @@ const navigationOptions = ref<NavigationOptions>({
   nextEl: '.swiper-button-next2',
   prevEl: '.swiper-button-prev2',
 })
+onBeforeMount(() => {
+  showHeaderBanner.value = true
+})
 onMounted(() => {
   getMeeting()
+  console.log(headerBanner.value)
   // window.addEventListener('scroll', handleScroll)
+  gsap.from(".noBody", {
+    opacity: 0,
+    y: 100,
+    ease: "power3",
+    duration: 3
+  })
 })
 </script>
 
